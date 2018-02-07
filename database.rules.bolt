@@ -62,6 +62,12 @@ path /journals/organizations/{oid}/{eid} {
     }
 }
 
+path /journals/organizations/{oid} {
+  index() {
+    ["id", "personal"]
+  }
+}
+
 path /likes/organizations/{oid} {
     read() { isAuthenticated() && isAllowed('organization', 'read', oid) }
 }
@@ -140,6 +146,12 @@ path /flashlight/results/{qid} {
     }
 }
 
+path /flashlight/results {
+    index() {
+      "timestamp"
+    }
+}
+
 path /organizations/{oid} is Any {
     read() { isAuthenticated() && (this == null || isAllowed('organization', 'read', oid) || isAdmin(oid)) }
     write() { isAuthenticated() && (isAdmin(oid) || prior(this) == null) }
@@ -147,6 +159,8 @@ path /organizations/{oid} is Any {
 path /organizations/{oid}/name {
     read() { isAuthenticated() }
 }
+
+
 
 path /users/{uid} {
     read() { auth.uid === uid }
@@ -170,6 +184,9 @@ path /users/organizations/{oid}/{uid} {
 
 path /{branch}/organizations/{oid}/{scope}/{type} {
     read() { (branch === 'resources' || branch === 'archive') && isAuthenticated() && isAllowedScope(scope, type, 'read', oid) }
+    index() {
+      ["updated","dueTime", "created"]
+    }
 }
 
 path /{branch}/organizations/{oid}/{scope}/{type}/{rid} {
@@ -202,3 +219,4 @@ path /domains/{domain} {
         isAuthenticated() && (this != null && isAdmin(this) || this == null && isAdmin(prior(this)))
     }
 }
+
