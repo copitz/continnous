@@ -22,7 +22,7 @@
     "autolinker": "^1.6.1",
     "extend": "^3.0.0",
     "firebase": "^3.6.4",
-    "highlight.js": "^9.12.0",
+    "highlight.js": "^10.4.1",
     "masonry-layout": "^4.2.1",
     "moment": "^2.20.1",
     "mutation-observer": "^1.0.2",
